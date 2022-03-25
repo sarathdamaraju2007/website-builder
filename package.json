@@ -7,7 +7,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "commit": "git-cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "config": {
     "commitizen": {
@@ -15,6 +16,7 @@
     }
   },
   "dependencies": {
+    "prettier": "^2.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -28,6 +30,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.11.0",
     "husky": "^7.0.0",
+    "lint-staged": "^12.3.7",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
   },
