@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddElement, BuilderElement } from "../types";
+import { AddElement, BuilderElementForStore } from "../types";
 
-const initialState: Record<string, BuilderElement> = {
+const initialState: Record<string, BuilderElementForStore> = {
   __parent__: {
     tag: "div",
     id: "__parent__",

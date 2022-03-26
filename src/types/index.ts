@@ -3,9 +3,17 @@ export interface BuilderElement {
   id: string;
   class?: string;
   styles?: string;
+  children?: BuilderElement[];
+}
+
+export interface BuilderElementForStore {
+  tag: string;
+  id: string;
+  class?: string;
+  styles?: string;
   children?: string[];
 }
 
-export interface AddElement extends BuilderElement {
+export interface AddElement extends BuilderElementForStore {
   parentId: string;
 }
