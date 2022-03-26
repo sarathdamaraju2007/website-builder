@@ -1,5 +1,5 @@
-function App() {
-  return <></>;
-}
+import { Builder } from "./components/pages";
 
-export default App;
+export const App = () => {
+  return <Builder />;
+};

@@ -8,8 +8,8 @@ const initialState: Record<string, BuilderElementForStore> = {
   },
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const builderSlice = createSlice({
+  name: "builder",
   initialState,
   reducers: {
     addElement: (state, action: PayloadAction<AddElement>) => {
@@ -18,13 +18,12 @@ export const counterSlice = createSlice({
       } = action;
 
       let parent = state[parentId];
-
       if (parent) {
-        state = {
+        return {
           ...state,
           [parent.id]: {
             ...parent,
-            children: [...(parent.children ?? []), newElement.id],
+            childrenKeys: [...(parent.childrenKeys ?? []), newElement.id],
           },
           [newElement.id.toString()]: newElement,
         };
@@ -33,6 +32,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { addElement } = counterSlice.actions;
+export const { addElement } = builderSlice.actions;
 
-export const counterReducer = counterSlice.reducer;
+export const builderReducer = builderSlice.reducer;

@@ -3,15 +3,11 @@ export interface BuilderElement {
   id: string;
   class?: string;
   styles?: string;
-  children?: BuilderElement[];
+  children?: BuilderElement[] | string;
 }
 
-export interface BuilderElementForStore {
-  tag: string;
-  id: string;
-  class?: string;
-  styles?: string;
-  children?: string[];
+export interface BuilderElementForStore extends BuilderElement {
+  childrenKeys?: string[];
 }
 
 export interface AddElement extends BuilderElementForStore {
