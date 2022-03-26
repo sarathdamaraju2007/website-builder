@@ -12,6 +12,7 @@ export type ButtonElementProps = {
     | "dark";
   size?: "large" | "small";
   icon?: JSX.Element;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 };
 
 export const Button: FC<ButtonElementProps> = ({
@@ -19,14 +20,19 @@ export const Button: FC<ButtonElementProps> = ({
   size,
   type = "primary",
   icon,
+  onClick,
 }) => {
   const className = useMemo(
     () => `btn btn-${type} ${size ? `btn-${size}` : ""}`,
     [type, size]
   );
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (onClick as React.MouseEventHandler<HTMLButtonElement>)?.(e);
+  };
+
   return (
-    <button className={className}>
+    <button className={className} onClick={handleClick}>
       {icon}
       <span>{children}</span>
     </button>
