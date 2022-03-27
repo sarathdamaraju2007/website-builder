@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { BuilderElement } from "../../../types";
-import { renderElement } from "../../../utils";
+import { useRenderElement } from "./hooks";
 import { EmptyBuilder } from "../../molecules";
 
 export const Builder = () => {
@@ -32,7 +32,7 @@ export const Builder = () => {
   const parentElement = constructJson["__root__"];
 
   if (parentElement && parentElement.children?.length) {
-    return renderElement(parentElement);
+    return useRenderElement(parentElement);
   }
 
   return <EmptyBuilder />;

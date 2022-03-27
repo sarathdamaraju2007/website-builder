@@ -20,13 +20,13 @@ export const EmptyBuilder = () => {
         className="add-new-section"
         data-tooltip="tooltip"
         data-placement="bottom"
-        title="Add Columns"
+        title="Add New Section"
       >
         <i className="icon icon-plus"></i>
       </span>
       <div className="new-row-blank">
         <Button type="light" size="small" onClick={handleRowAdd}>
-          Add Columns
+          Add New Section
         </Button>
       </div>
     </section>
