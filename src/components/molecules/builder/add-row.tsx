@@ -1,18 +1,15 @@
 import { useDispatch } from "react-redux";
-import { addElement } from "../../../slice";
 import { Button } from "../../atoms";
-import { v4 as uuid } from "uuid";
+import { ModalType, toggleView } from "../../../slice/modals";
 
 export const EmptyBuilder = () => {
   const dispatch = useDispatch();
 
   const handleRowAdd = () => {
     dispatch(
-      addElement({
-        parentId: "__parent__",
-        tag: "button",
-        id: uuid(),
-        children: "hello",
+      toggleView({
+        modalType: ModalType.ColumnAddModal,
+        visibility: true,
       })
     );
   };
