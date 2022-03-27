@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 export type SliderPropTypes = {
   visible?: boolean;
   onClose?: () => void;
 };
 
-export const BuilderSlider = ({
+export const BuilderSlider: FC<SliderPropTypes> = ({
   visible = false,
   onClose,
-}: SliderPropTypes) => {
+  children,
+}) => {
   const [open, setOpen] = useState(visible);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export const BuilderSlider = ({
       </span>
       <div className="manage-columns">
         <h2>Manage Columns</h2>
-        <div className="columns-section-group-wrap"></div>
+        <div className="columns-section-group-wrap">{children}</div>
       </div>
     </section>
   );

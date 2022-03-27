@@ -32,7 +32,7 @@ export const Builder = () => {
   const parentElement = constructJson["__parent__"];
 
   if (parentElement && parentElement.children?.length) {
-    return renderElement(constructJson["__parent__"]);
+    return renderElement(parentElement);
   }
 
   return <EmptyBuilder />;
