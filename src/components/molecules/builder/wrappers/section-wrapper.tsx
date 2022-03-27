@@ -1,8 +1,23 @@
 import { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 import ReactTooltip from "react-tooltip";
+import { v4 } from "uuid";
+import { addElement } from "../../../../slice";
 
 export const SectionWrapper: FC = ({ children }) => {
   const [active, setActive] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleSectionAdd = () => {
+    dispatch(
+      addElement({
+        parentId: "__root__",
+        id: v4(),
+        tag: "__section__",
+      })
+    );
+  };
+
   return (
     <div
       className={`hl_page-creator--section ${active ? "active" : ""}`}
@@ -33,14 +48,15 @@ export const SectionWrapper: FC = ({ children }) => {
           </span>
         </div>
       </div>
-      <span
+      <button
         className="add-new-section"
         data-tip
         data-for="addSection"
         title="Add New Section"
+        onClick={handleSectionAdd}
       >
         <i className="fa fa-plus"></i>
-      </span>
+      </button>
       <ReactTooltip id="addSection">
         <span>Add new section</span>
       </ReactTooltip>
