@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: string = "__parent__";
+const initialState: string = "__root__";
 
 export const activeElementSlice = createSlice({
   name: "activeElement",

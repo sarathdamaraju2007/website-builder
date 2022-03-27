@@ -29,7 +29,7 @@ export const Builder = () => {
     }, {});
   }, [builderConfig]);
 
-  const parentElement = constructJson["__parent__"];
+  const parentElement = constructJson["__root__"];
 
   if (parentElement && parentElement.children?.length) {
     return renderElement(parentElement);
