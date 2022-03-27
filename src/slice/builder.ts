@@ -3,7 +3,7 @@ import { AddElement, BuilderElementForStore } from "../types";
 
 const initialState: Record<string, BuilderElementForStore> = {
   __root__: {
-    tag: "root",
+    tag: "__root__",
     id: "__root__",
   },
 };
