@@ -1,5 +1,5 @@
-import { Builder } from "./components/pages";
+import { BuilderPage } from "./components/pages";
 
 export const App = () => {
-  return <Builder />;
+  return <BuilderPage />;
 };

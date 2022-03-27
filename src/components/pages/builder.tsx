@@ -1,40 +1,29 @@
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ModalType, toggleView } from "../../slice/modals";
 import { RootState } from "../../store";
-import { BuilderElement } from "../../types";
-import { renderElement } from "../../utils";
-import { EmptyBuilder } from "../molecules";
+import { BuilderSlider } from "../atoms";
+import { Builder } from "../organisms";
 
-export const Builder = () => {
-  const builderConfig = useSelector((state: RootState) => state.builderConfig);
+export const BuilderPage = () => {
+  const dispatch = useDispatch();
 
-  const constructJson: Record<string, BuilderElement> = useMemo(() => {
-    return Object.keys(builderConfig).reduce((acc, key) => {
-      let { childrenKeys = [], children = [], ...rest } = builderConfig[key];
+  const showColumnAddModal = useSelector(
+    (state: RootState) => state.modalReducer.showColumnAddModal
+  );
 
-      if (childrenKeys.length) {
-        children = childrenKeys.map((childKey) => {
-          let child = builderConfig[childKey];
-          return child;
-        });
-      }
+  const handleModalClose = () => {
+    dispatch(
+      toggleView({
+        modalType: ModalType.ColumnAddModal,
+        visibility: false,
+      })
+    );
+  };
 
-      return {
-        ...acc,
-        [key]: {
-          ...rest,
-          children,
-        },
-      };
-    }, {});
-  }, [builderConfig]);
-
-  const parentElement = constructJson["__parent__"];
-
-  if (parentElement && parentElement.children?.length) {
-    console.log(parentElement, builderConfig);
-    return renderElement(constructJson["__parent__"]);
-  }
-
-  return <EmptyBuilder />;
+  return (
+    <>
+      <Builder />
+      <BuilderSlider visible={showColumnAddModal} onClose={handleModalClose} />
+    </>
+  );
 };
