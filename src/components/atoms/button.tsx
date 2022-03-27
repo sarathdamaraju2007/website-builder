@@ -10,7 +10,7 @@ export type ButtonElementProps = {
     | "info"
     | "light"
     | "dark";
-  size?: "large" | "small";
+  size?: "large" | "small" | "slim";
   icon?: JSX.Element;
   onClick?: React.MouseEventHandler<HTMLElement>;
 };

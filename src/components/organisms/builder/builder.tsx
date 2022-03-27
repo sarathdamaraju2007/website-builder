@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { BuilderElement } from "../../../types";
+import { AddSection } from "../../molecules/builder/add-section";
 import { useRenderElement } from "./hooks";
-import { EmptyBuilder } from "../../molecules";
 
 export const Builder = () => {
   const builderConfig = useSelector((state: RootState) => state.builderConfig);
@@ -32,8 +32,13 @@ export const Builder = () => {
   const parentElement = constructJson["__root__"];
 
   if (parentElement && parentElement.children?.length) {
-    return useRenderElement(parentElement);
+    return (
+      <>
+        {useRenderElement(parentElement)}
+        <AddSection />
+      </>
+    );
   }
 
-  return <EmptyBuilder />;
+  return <AddSection />;
 };

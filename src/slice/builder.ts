@@ -5,12 +5,6 @@ const initialState: Record<string, BuilderElementForStore> = {
   __root__: {
     tag: "__root__",
     id: "__root__",
-    childrenKeys: ["23"],
-  },
-  "23": {
-    tag: "button",
-    id: "23",
-    children: "heer",
   },
 };
 

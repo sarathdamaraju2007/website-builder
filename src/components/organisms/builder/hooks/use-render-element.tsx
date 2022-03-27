@@ -2,11 +2,11 @@ import { createElement, ReactElement, ReactNode } from "react";
 import { Button, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
 import { SectionWrapper } from "../../../molecules/builder/wrappers";
+import { AddRow } from "../../../molecules";
 
 const elementsMap: Record<string, any> = {
   __root__: "div",
-  __section__: Row,
-  __column__: "section",
+  __section__: "section",
   button: Button,
 };
 
@@ -23,18 +23,23 @@ const renderElement: any = (config: BuilderElement) =>
     config.children &&
       (typeof config.children === "string"
         ? config.children
-        : config.children.map((c) => renderElement(c)))
+        : config.children.map((c) => useRenderElement(c)))
   );
 
 export const useRenderElement: any = (config: BuilderElement) => {
   if (validElements.includes(config.tag)) {
     switch (config.tag) {
       case "__section__": {
-        return <SectionWrapper>{renderElement(config)}</SectionWrapper>;
+        return (
+          <SectionWrapper>
+            {config.children ? renderElement(config) : <AddRow />}
+          </SectionWrapper>
+        );
       }
 
+      case "__root__":
       default: {
-        return <SectionWrapper>{renderElement(config)}</SectionWrapper>;
+        return <div>{config.children ? renderElement(config) : "empty"}</div>;
       }
     }
   }
