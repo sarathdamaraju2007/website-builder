@@ -8,24 +8,32 @@ import { EmptyBuilder } from "../molecules";
 export const Builder = () => {
   const builderConfig = useSelector((state: RootState) => state.builderConfig);
 
-  const constructJson = useMemo(() => {
+  const constructJson: Record<string, BuilderElement> = useMemo(() => {
     return Object.keys(builderConfig).reduce((acc, key) => {
-      let el: BuilderElement = {
-        ...builderConfig[key],
-        children: (builderConfig[key].childrenKeys ?? []).map(
-          (childKey) => builderConfig[childKey] as BuilderElement
-        ),
-      };
+      let { childrenKeys = [], children = [], ...rest } = builderConfig[key];
+
+      if (childrenKeys.length) {
+        children = childrenKeys.map((childKey) => {
+          let child = builderConfig[childKey];
+          return child;
+        });
+      }
 
       return {
         ...acc,
-        ...el,
-      } as BuilderElement;
+        [key]: {
+          ...rest,
+          children,
+        },
+      };
     }, {});
   }, [builderConfig]);
 
-  if (constructJson && (constructJson as BuilderElement).children?.length) {
-    return renderElement(constructJson);
+  const parentElement = constructJson["__parent__"];
+
+  if (parentElement && parentElement.children?.length) {
+    console.log(parentElement, builderConfig);
+    return renderElement(constructJson["__parent__"]);
   }
 
   return <EmptyBuilder />;

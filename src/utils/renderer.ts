@@ -1,14 +1,15 @@
-import { createElement, useMemo } from "react";
-import { Button } from "../components/atoms";
+import { createElement } from "react";
+import { Button, Row } from "../components/atoms";
 import { BuilderElement } from "../types";
 
 const getComponentByKey: Record<string, any> = {
   button: Button,
+  parent: Row,
 };
 
-export const renderElement: any = (config: BuilderElement) => {
-  const validElements = useMemo(() => Object.keys(getComponentByKey), []);
+const validElements = Object.keys(getComponentByKey) ?? [];
 
+export const renderElement: any = (config: BuilderElement) => {
   if (validElements.includes(config.tag)) {
     return createElement(
       getComponentByKey[config.tag],
