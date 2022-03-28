@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 export const AddSection = () => {
   const dispatch = useDispatch();
 
-  const handleRowAdd = () => {
+  const handleSectionAdd = () => {
     dispatch(
       addElement({
         parentId: "__root__",
@@ -26,7 +26,7 @@ export const AddSection = () => {
       }}
     >
       <div className="new-row-blank">
-        <Button type="light" size="large" onClick={handleRowAdd}>
+        <Button type="light" size="large" onClick={handleSectionAdd}>
           Add New Section
         </Button>
       </div>

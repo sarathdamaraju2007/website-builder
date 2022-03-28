@@ -1,12 +1,16 @@
 import { createElement, ReactElement, ReactNode } from "react";
-import { Button, Row } from "../../../atoms";
+import { Button, Col, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
-import { SectionWrapper } from "../../../molecules/builder/wrappers";
+import {
+  ColumnWrapper,
+  SectionWrapper,
+} from "../../../molecules/builder/wrappers";
 import { AddRow } from "../../../molecules";
 
 const elementsMap: Record<string, any> = {
   __root__: "div",
-  __section__: "section",
+  __section__: Row,
+  __column__: Col,
   button: Button,
 };
 
@@ -27,19 +31,33 @@ const renderElement: any = (config: BuilderElement) =>
   );
 
 export const useRenderElement: any = (config: BuilderElement) => {
+  console.log(config.tag);
   if (validElements.includes(config.tag)) {
     switch (config.tag) {
       case "__section__": {
         return (
           <SectionWrapper>
-            {config.children ? renderElement(config) : <AddRow />}
+            {config.children?.length ? (
+              renderElement(config)
+            ) : (
+              <AddRow activeElementId={config.id} />
+            )}
           </SectionWrapper>
         );
       }
 
+      case "__column__": {
+        return (
+          <ColumnWrapper>
+            {config.children?.length ? renderElement(config) : "empty column"}
+          </ColumnWrapper>
+        );
+      }
       case "__root__":
       default: {
-        return <div>{config.children ? renderElement(config) : "empty"}</div>;
+        return (
+          <div>{config.children?.length ? renderElement(config) : "empty"}</div>
+        );
       }
     }
   }

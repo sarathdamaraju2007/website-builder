@@ -1,41 +1,48 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
-import { BuilderElement } from "../../../types";
-import { AddSection } from "../../molecules/builder/add-section";
+import { BuilderElementForStore } from "../../../types";
+import { AddSection } from "../../molecules/builder";
 import { useRenderElement } from "./hooks";
+
+const getTreeFromList = (data: BuilderElementForStore[]) => {
+  let list = data.slice(1);
+  let map: Record<string, any> = {},
+    node;
+
+  for (let i = 0; i < list.length; i += 1) {
+    map[list[i].id] = i;
+  }
+
+  for (let j = 0; j < list.length; j += 1) {
+    node = list[j];
+    if (list[j].parentId !== "__root__") {
+      const { children, ...rest } = list[map[list[j].parentId]];
+      list[map[list[j].parentId]] = {
+        ...rest,
+        children: [...children, list[j]],
+      };
+    }
+  }
+  return list;
+};
 
 export const Builder = () => {
   const builderConfig = useSelector((state: RootState) => state.builderConfig);
 
-  const constructJson: Record<string, BuilderElement> = useMemo(() => {
-    return Object.keys(builderConfig).reduce((acc, key) => {
-      let { childrenKeys = [], children = [], ...rest } = builderConfig[key];
+  const parse = useCallback(getTreeFromList, []);
+  const roots = parse(Object.values(builderConfig)).filter(
+    (el) => el.parentId === "__root__"
+  );
 
-      if (childrenKeys.length) {
-        children = childrenKeys.map((childKey) => {
-          let child = builderConfig[childKey];
-          return child;
-        });
-      }
-
-      return {
-        ...acc,
-        [key]: {
-          ...rest,
-          children,
-        },
-      };
-    }, {});
-  }, [builderConfig]);
-
-  const parentElement = constructJson["__root__"];
-
-  if (parentElement && parentElement.children?.length) {
+  if (roots.length) {
     return (
       <>
-        {useRenderElement(parentElement)}
-        <AddSection />
+        {useRenderElement({
+          tag: "__root__",
+          id: "__root__",
+          children: roots,
+        })}
       </>
     );
   }
