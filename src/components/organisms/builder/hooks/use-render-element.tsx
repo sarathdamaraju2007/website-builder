@@ -1,7 +1,10 @@
 import { createElement, ReactElement, ReactNode } from "react";
 import { Button, Col, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
-import { SectionWrapper } from "../../../molecules/builder/wrappers";
+import {
+  ColumnWrapper,
+  SectionWrapper,
+} from "../../../molecules/builder/wrappers";
 import { AddRow } from "../../../molecules";
 
 const elementsMap: Record<string, any> = {
@@ -45,9 +48,9 @@ export const useRenderElement: any = (config: BuilderElement) => {
 
       case "__column__": {
         return (
-          <div>
+          <ColumnWrapper>
             {config.children?.length ? renderElement(config) : "empty column"}
-          </div>
+          </ColumnWrapper>
         );
       }
       case "__root__":
