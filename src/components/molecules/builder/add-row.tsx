@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { Button } from "../../atoms";
 import { ModalType, toggleView } from "../../../slice/modals";
+import { setActiveElement } from "../../../slice/active-element";
 
-export const AddRow = () => {
+export const AddRow = ({ activeElementId }: { activeElementId: string }) => {
   const dispatch = useDispatch();
 
   const handleRowAdd = () => {
@@ -10,6 +11,12 @@ export const AddRow = () => {
       toggleView({
         modalType: ModalType.ColumnAddModal,
         visibility: true,
+      })
+    );
+
+    dispatch(
+      setActiveElement({
+        activeElementId,
       })
     );
   };

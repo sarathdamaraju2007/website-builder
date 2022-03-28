@@ -1,12 +1,13 @@
 import { createElement, ReactElement, ReactNode } from "react";
-import { Button, Row } from "../../../atoms";
+import { Button, Col, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
 import { SectionWrapper } from "../../../molecules/builder/wrappers";
 import { AddRow } from "../../../molecules";
 
 const elementsMap: Record<string, any> = {
   __root__: "div",
-  __section__: "section",
+  __section__: Row,
+  __column__: Col,
   button: Button,
 };
 
@@ -32,11 +33,20 @@ export const useRenderElement: any = (config: BuilderElement) => {
       case "__section__": {
         return (
           <SectionWrapper>
-            {config.children ? renderElement(config) : <AddRow />}
+            {config.children ? (
+              renderElement(config)
+            ) : (
+              <AddRow activeElementId={config.id} />
+            )}
           </SectionWrapper>
         );
       }
 
+      case "__column__": {
+        return (
+          <div>{config.children ? renderElement(config) : "empty column"}</div>
+        );
+      }
       case "__root__":
       default: {
         return <div>{config.children ? renderElement(config) : "empty"}</div>;

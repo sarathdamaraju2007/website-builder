@@ -7,3 +7,7 @@ export const Row: FC = ({ children }) => {
     </div>
   );
 };
+
+export const Col: FC = ({ children }) => {
+  return <div className="hl_page-creator--column">{children}</div>;
+};
