@@ -6,10 +6,8 @@ export interface BuilderElement {
   children?: BuilderElement[] | string;
 }
 
-export interface BuilderElementForStore extends BuilderElement {
-  childrenKeys?: string[];
-}
-
-export interface AddElement extends BuilderElementForStore {
+export interface BuilderElementForStore
+  extends Omit<BuilderElement, "children"> {
+  children: BuilderElementForStore[];
   parentId: string;
 }

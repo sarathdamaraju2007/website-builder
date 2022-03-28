@@ -14,6 +14,7 @@ export const SectionWrapper: FC = ({ children }) => {
         parentId: "__root__",
         id: v4(),
         tag: "__section__",
+        children: [],
       })
     );
   };

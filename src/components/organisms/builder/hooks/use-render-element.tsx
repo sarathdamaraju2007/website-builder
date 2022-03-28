@@ -28,12 +28,13 @@ const renderElement: any = (config: BuilderElement) =>
   );
 
 export const useRenderElement: any = (config: BuilderElement) => {
+  console.log(config.tag);
   if (validElements.includes(config.tag)) {
     switch (config.tag) {
       case "__section__": {
         return (
           <SectionWrapper>
-            {config.children ? (
+            {config.children?.length ? (
               renderElement(config)
             ) : (
               <AddRow activeElementId={config.id} />
@@ -44,12 +45,16 @@ export const useRenderElement: any = (config: BuilderElement) => {
 
       case "__column__": {
         return (
-          <div>{config.children ? renderElement(config) : "empty column"}</div>
+          <div>
+            {config.children?.length ? renderElement(config) : "empty column"}
+          </div>
         );
       }
       case "__root__":
       default: {
-        return <div>{config.children ? renderElement(config) : "empty"}</div>;
+        return (
+          <div>{config.children?.length ? renderElement(config) : "empty"}</div>
+        );
       }
     }
   }

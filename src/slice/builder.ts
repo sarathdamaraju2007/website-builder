@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddElement, BuilderElementForStore } from "../types";
+import { BuilderElementForStore } from "../types";
 
 const initialState: Record<string, BuilderElementForStore> = {
   __root__: {
     tag: "__root__",
     id: "__root__",
+    parentId: "0",
+    children: [],
   },
 };
 
@@ -12,20 +14,19 @@ export const builderSlice = createSlice({
   name: "builder",
   initialState,
   reducers: {
-    addElement: (state, action: PayloadAction<AddElement>) => {
+    addElement: (state, action: PayloadAction<BuilderElementForStore>) => {
       const {
-        payload: { parentId, ...newElement },
+        payload: { parentId = "__root__", ...newElement },
       } = action;
 
-      let parent = state[parentId];
       if (parent) {
         return {
           ...state,
-          [parent.id]: {
-            ...parent,
-            childrenKeys: [...(parent.childrenKeys ?? []), newElement.id],
+          [newElement.id.toString()]: {
+            parentId,
+            ...newElement,
+            children: [],
           },
-          [newElement.id.toString()]: newElement,
         };
       }
     },
