@@ -3,6 +3,7 @@ import { Button, Col, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
 import {
   ColumnWrapper,
+  ElementWrapper,
   SectionWrapper,
 } from "../../../molecules/builder/wrappers";
 import { AddRow, AddElement } from "../../../molecules";
@@ -57,10 +58,18 @@ export const useRenderElement: any = (config: BuilderElement) => {
           </ColumnWrapper>
         );
       }
-      case "__root__":
-      default: {
+
+      case "__root__": {
         return (
           <div>{config.children?.length ? renderElement(config) : "empty"}</div>
+        );
+      }
+
+      default: {
+        return (
+          <ElementWrapper>
+            {config.children?.length ? renderElement(config) : "empty"}
+          </ElementWrapper>
         );
       }
     }

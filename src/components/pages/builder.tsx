@@ -58,7 +58,7 @@ export const BuilderPage = () => {
         parentId: activeElement,
         id: v4(),
         tag: elementConfig.tag,
-        children: elementConfig.children,
+        children: elementConfig.children as any,
       })
     );
   };
