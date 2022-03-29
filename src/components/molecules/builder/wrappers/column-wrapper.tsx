@@ -22,8 +22,8 @@ export const ColumnWrapper: FC = ({ children }) => {
   return (
     <div
       className={`hl_page-creator--column ${active ? "active" : ""}`}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
+      // onMouseEnter={() => setActive(true)}
+      // onMouseLeave={() => setActive(false)}
     >
       {active && (
         <>
