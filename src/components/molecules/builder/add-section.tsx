@@ -12,6 +12,7 @@ export const AddSection = () => {
         parentId: "__root__",
         id: v4(),
         tag: "__section__",
+        children: [],
       })
     );
   };

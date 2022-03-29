@@ -25,7 +25,7 @@ export const builderSlice = createSlice({
           [newElement.id.toString()]: {
             parentId,
             ...newElement,
-            children: [],
+            createdAt: new Date().getTime(),
           },
         };
       }

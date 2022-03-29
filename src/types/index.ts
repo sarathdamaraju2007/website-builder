@@ -4,10 +4,11 @@ export interface BuilderElement {
   class?: string;
   styles?: string;
   children?: BuilderElement[] | string;
+  createdAt: number;
 }
 
 export interface BuilderElementForStore
-  extends Omit<BuilderElement, "children"> {
-  children: BuilderElementForStore[];
+  extends Omit<BuilderElement, "children" | "createdAt"> {
+  children: BuilderElementForStore[] | string;
   parentId: string;
 }

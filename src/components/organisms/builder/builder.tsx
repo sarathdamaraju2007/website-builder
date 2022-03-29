@@ -6,7 +6,9 @@ import { AddSection } from "../../molecules/builder";
 import { useRenderElement } from "./hooks";
 
 const getTreeFromList = (data: BuilderElementForStore[]) => {
-  let list = data.slice(1);
+  // this is because root should come at last
+  let list = data.slice(1).sort((a, b) => b.createdAt - a.createdAt);
+
   let map: Record<string, any> = {},
     node;
 
@@ -20,10 +22,11 @@ const getTreeFromList = (data: BuilderElementForStore[]) => {
       const { children, ...rest } = list[map[list[j].parentId]];
       list[map[list[j].parentId]] = {
         ...rest,
-        children: [...children, list[j]],
+        children: [...children, list[j]] as any,
       };
     }
   }
+
   return list;
 };
 

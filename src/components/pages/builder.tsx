@@ -8,6 +8,8 @@ import { Builder } from "../organisms";
 import { columnsConfig } from "../organisms/builder/config/columns";
 import styled from "styled-components";
 import { v4 } from "uuid";
+import { elementsConfig } from "../organisms/builder/config/elements";
+import { BuilderElement } from "../../types";
 
 const Container = styled.div`
   margin: 16px 0;
@@ -22,12 +24,16 @@ export const BuilderPage = () => {
     (state: RootState) => state.modalReducer.showColumnAddModal
   );
 
+  const showElementAddModal = useSelector(
+    (state: RootState) => state.modalReducer.showElementsAddModal
+  );
+
   const activeElement = useSelector((state: RootState) => state.activeElement);
 
-  const handleModalClose = () => {
+  const handleModalClose = (type: ModalType) => {
     dispatch(
       toggleView({
-        modalType: ModalType.ColumnAddModal,
+        modalType: type,
         visibility: false,
       })
     );
@@ -40,17 +46,28 @@ export const BuilderPage = () => {
           parentId: activeElement,
           id: v4(),
           tag: "__column__",
+          children: [],
         })
       );
     }
   };
 
+  const handleElementAdd = (elementConfig: BuilderElement) => {
+    dispatch(
+      addElement({
+        parentId: activeElement,
+        id: v4(),
+        tag: elementConfig.tag,
+        children: elementConfig.children as any,
+      })
+    );
+  };
   return (
     <>
       <Builder />
       <BuilderSlider
         visible={showColumnAddModal}
-        onClose={handleModalClose}
+        onClose={() => handleModalClose(ModalType.ColumnAddModal)}
         key="columns"
       >
         <Container>
@@ -62,6 +79,19 @@ export const BuilderPage = () => {
                 </span>
               )}
               <p>{column.columnCount}</p>
+            </Panel>
+          ))}
+        </Container>
+      </BuilderSlider>
+      <BuilderSlider
+        visible={showElementAddModal}
+        onClose={() => handleModalClose(ModalType.ElementsAddModal)}
+        key="elements"
+      >
+        <Container>
+          {elementsConfig.map((element) => (
+            <Panel onClick={() => handleElementAdd(element)}>
+              <p>{element.tag}</p>
             </Panel>
           ))}
         </Container>
