@@ -12,6 +12,7 @@ import { elementsConfig } from "../organisms/builder/config/elements";
 import { BuilderElement } from "../../types";
 import { AppLayout } from "../layout/app-layout";
 import { ElementEditor } from "../molecules/builder/element-editor";
+import { SecondaryNav } from "../atoms/secondary-nav";
 
 const Container = styled.div`
   display: flex;
@@ -58,6 +59,13 @@ export const BuilderPage = () => {
         })
       );
     }
+
+    dispatch(
+      toggleView({
+        modalType: ModalType.ColumnAddModal,
+        visibility: false,
+      })
+    );
   };
 
   const handleElementAdd = (elementConfig: BuilderElement) => {
@@ -71,9 +79,16 @@ export const BuilderPage = () => {
         createdAt: new Date().getTime(),
       })
     );
+    dispatch(
+      toggleView({
+        modalType: ModalType.ElementsAddModal,
+        visibility: false,
+      })
+    );
   };
   return (
     <AppLayout title="Highlevel - Builder">
+      <SecondaryNav />
       <Builder />
       <BuilderSlider
         visible={showColumnAddModal}
