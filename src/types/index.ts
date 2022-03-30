@@ -8,7 +8,7 @@ export interface BuilderElement {
 }
 
 export interface BuilderElementForStore
-  extends Omit<BuilderElement, "children" | "createdAt"> {
+  extends Omit<BuilderElement, "children"> {
   children: BuilderElementForStore[] | string;
   parentId: string;
 }

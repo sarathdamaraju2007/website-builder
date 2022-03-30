@@ -1,6 +1,6 @@
 import { BuilderElement } from "../../../../types";
 
-export const elementsConfig: BuilderElement[] = [
+export const elementsConfig: Omit<BuilderElement, "createdAt">[] = [
   {
     id: "p",
     tag: "p",

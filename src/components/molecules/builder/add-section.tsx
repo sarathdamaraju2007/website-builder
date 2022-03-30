@@ -13,6 +13,7 @@ export const AddSection = () => {
         id: v4(),
         tag: "__section__",
         children: [],
+        createdAt: new Date().getTime(),
       })
     );
   };

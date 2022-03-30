@@ -1,5 +1,8 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setActiveElement } from "../../../../slice/active-element";
+import { ModalType, toggleView } from "../../../../slice/modals";
 
 const ActionsContainer = styled.div`
   opacity: 0;
@@ -33,13 +36,29 @@ const ActionMenu = styled.span`
   color: #fff;
 `;
 
-export const ElementWrapper: FC = ({ children }) => {
+export const ElementWrapper: FC<{ id: string }> = ({ id, children }) => {
+  const dispatch = useDispatch();
+
+  const handleEdit = () => {
+    dispatch(
+      toggleView({
+        modalType: ModalType.ElementsManageModal,
+        visibility: true,
+      })
+    );
+
+    dispatch(
+      setActiveElement({
+        activeElementId: id,
+      })
+    );
+  };
   return (
     <WrapperContainer>
       <ActionsContainer>
         <ActionsMenu>
           <div className="more-actions">
-            <ActionMenu>
+            <ActionMenu onClick={handleEdit}>
               <i className="fa fa-cog"></i>
             </ActionMenu>
             <ActionMenu>

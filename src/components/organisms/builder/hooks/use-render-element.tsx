@@ -1,5 +1,5 @@
 import { createElement, ReactElement, ReactNode } from "react";
-import { Button, Col, Row } from "../../../atoms";
+import { Col, Row } from "../../../atoms";
 import { BuilderElement } from "../../../../types";
 import {
   ColumnWrapper,
@@ -7,13 +7,13 @@ import {
   SectionWrapper,
 } from "../../../molecules/builder/wrappers";
 import { AddRow, AddElement } from "../../../molecules";
+import { validElementMaps } from "../../../molecules/builder/element-editor";
 
 const elementsMap: Record<string, any> = {
   __root__: "div",
   __section__: Row,
   __column__: Col,
-  button: Button,
-  p: "p",
+  ...validElementMaps,
 };
 
 const validElements = Object.keys(elementsMap) ?? [];
@@ -67,7 +67,7 @@ export const useRenderElement: any = (config: BuilderElement) => {
 
       default: {
         return (
-          <ElementWrapper>
+          <ElementWrapper id={config.id}>
             {config.children?.length ? renderElement(config) : "empty"}
           </ElementWrapper>
         );

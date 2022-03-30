@@ -11,11 +11,12 @@ import { v4 } from "uuid";
 import { elementsConfig } from "../organisms/builder/config/elements";
 import { BuilderElement } from "../../types";
 import { AppLayout } from "../layout/app-layout";
+import { ElementEditor } from "../molecules/builder/element-editor";
 
 const Container = styled.div`
-  margin: 16px 0;
   display: flex;
   flex-wrap: wrap;
+  padding: 16px;
 `;
 
 export const BuilderPage = () => {
@@ -28,6 +29,11 @@ export const BuilderPage = () => {
   const showElementAddModal = useSelector(
     (state: RootState) => state.modalReducer.showElementsAddModal
   );
+
+  const showElementsManageModal = useSelector(
+    (state: RootState) => state.modalReducer.showElementsManageModal
+  );
+  const builderConfig = useSelector((state: RootState) => state.builderConfig);
 
   const activeElement = useSelector((state: RootState) => state.activeElement);
 
@@ -48,6 +54,7 @@ export const BuilderPage = () => {
           id: v4(),
           tag: "__column__",
           children: [],
+          createdAt: new Date().getTime(),
         })
       );
     }
@@ -60,6 +67,7 @@ export const BuilderPage = () => {
         id: v4(),
         tag: elementConfig.tag,
         children: elementConfig.children as any,
+        createdAt: new Date().getTime(),
       })
     );
   };
@@ -95,6 +103,15 @@ export const BuilderPage = () => {
               <p>{element.tag}</p>
             </Panel>
           ))}
+        </Container>
+      </BuilderSlider>
+      <BuilderSlider
+        visible={showElementsManageModal}
+        onClose={() => handleModalClose(ModalType.ElementsManageModal)}
+        key="elements-meta"
+      >
+        <Container>
+          <ElementEditor elementConfig={builderConfig[activeElement]} />
         </Container>
       </BuilderSlider>
     </AppLayout>

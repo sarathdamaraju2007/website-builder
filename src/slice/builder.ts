@@ -7,6 +7,7 @@ const initialState: Record<string, BuilderElementForStore> = {
     id: "__root__",
     parentId: "0",
     children: [],
+    createdAt: 0,
   },
 };
 
@@ -25,14 +26,25 @@ export const builderSlice = createSlice({
           [newElement.id.toString()]: {
             parentId,
             ...newElement,
-            createdAt: new Date().getTime(),
           },
+        };
+      }
+    },
+    editElement: (state, action: PayloadAction<BuilderElementForStore>) => {
+      const { payload } = action;
+
+      const { id } = state[payload.id];
+
+      if (id) {
+        return {
+          ...state,
+          [id]: payload,
         };
       }
     },
   },
 });
 
-export const { addElement } = builderSlice.actions;
+export const { addElement, editElement } = builderSlice.actions;
 
 export const builderReducer = builderSlice.reducer;

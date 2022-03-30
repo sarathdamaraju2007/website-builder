@@ -15,6 +15,7 @@ export const SectionWrapper: FC = ({ children }) => {
         id: v4(),
         tag: "__section__",
         children: [],
+        createdAt: new Date().getTime(),
       })
     );
   };

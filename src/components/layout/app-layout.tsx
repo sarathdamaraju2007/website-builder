@@ -50,6 +50,7 @@ const Content = styled.div`
   height: calc(100vh - 64px);
   overflow: auto;
   background: #f2f7fa;
+  margin-left: 64px;
 `;
 
 export const AppLayout: FC<{ title: string }> = ({ title, children }) => {
