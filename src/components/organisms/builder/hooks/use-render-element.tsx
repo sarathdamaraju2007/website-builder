@@ -18,6 +18,8 @@ const elementsMap: Record<string, any> = {
 
 const validElements = Object.keys(elementsMap) ?? [];
 
+const elementsWithNoChildren = ["img"];
+
 const renderElement: any = (config: BuilderElement) =>
   createElement(
     elementsMap[config.tag],
@@ -25,14 +27,17 @@ const renderElement: any = (config: BuilderElement) =>
       id: config.id,
       key: config.id,
       className: config.class ?? null,
+      ...(config.meta ?? {}),
     },
-    config.children &&
-      (typeof config.children === "string"
+    config.children && !elementsWithNoChildren.includes(config.tag)
+      ? typeof config.children === "string"
         ? config.children
-        : config.children.map((c) => useRenderElement(c)))
+        : config.children.map((c) => useRenderElement(c))
+      : null
   );
 
 export const useRenderElement: any = (config: BuilderElement) => {
+  console.log(config);
   if (validElements.includes(config.tag)) {
     switch (config.tag) {
       case "__section__": {

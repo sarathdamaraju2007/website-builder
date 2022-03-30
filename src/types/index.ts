@@ -5,6 +5,7 @@ export interface BuilderElement {
   styles?: string;
   children?: BuilderElement[] | string;
   createdAt: number;
+  meta: Record<string, any>;
 }
 
 export interface BuilderElementForStore

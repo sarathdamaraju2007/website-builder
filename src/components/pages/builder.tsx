@@ -63,6 +63,7 @@ export const BuilderPage = () => {
   const handleElementAdd = (elementConfig: BuilderElement) => {
     dispatch(
       addElement({
+        ...elementConfig,
         parentId: activeElement,
         id: v4(),
         tag: elementConfig.tag,
