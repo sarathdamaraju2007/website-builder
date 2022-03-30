@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { v4 } from "uuid";
 import { elementsConfig } from "../organisms/builder/config/elements";
 import { BuilderElement } from "../../types";
+import { AppLayout } from "../layout/app-layout";
 
 const Container = styled.div`
   margin: 16px 0;
@@ -63,7 +64,7 @@ export const BuilderPage = () => {
     );
   };
   return (
-    <>
+    <AppLayout title="Highlevel - Builder">
       <Builder />
       <BuilderSlider
         visible={showColumnAddModal}
@@ -96,6 +97,6 @@ export const BuilderPage = () => {
           ))}
         </Container>
       </BuilderSlider>
-    </>
+    </AppLayout>
   );
 };
