@@ -1,7 +1,10 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import styled from "styled-components";
 import { v4 } from "uuid";
 import { addElement, deleteElement } from "../../../../slice";
+import { Button } from "../../../atoms";
 import {
   ActionMenu,
   ActionsContainer,
@@ -9,6 +12,25 @@ import {
   WrapperContainer,
 } from "./common";
 
+const AddButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #37ca37;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out 0s;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: -15px;
+  z-index: 2;
+`;
 export const SectionWrapper: FC<{ id: string }> = ({ id, children }) => {
   const dispatch = useDispatch();
 
@@ -45,8 +67,23 @@ export const SectionWrapper: FC<{ id: string }> = ({ id, children }) => {
             </ActionMenu>
           </div>
         </ActionsMenu>
+        <AddButtonContainer>
+          <Button size="slim" onClick={handleSectionAdd} type="info">
+            <i
+              className="fa fa-plus"
+              aria-hidden="true"
+              data-for={`addSection-tooltip-${id}`}
+              data-tip
+            ></i>
+          </Button>
+        </AddButtonContainer>
       </ActionsContainer>
+
       {children}
+
+      <ReactTooltip id={`addSection-tooltip-${id}`}>
+        <span>Add section</span>
+      </ReactTooltip>
     </WrapperContainer>
   );
 };
