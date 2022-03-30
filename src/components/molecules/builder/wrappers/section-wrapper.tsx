@@ -1,11 +1,15 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
-import ReactTooltip from "react-tooltip";
 import { v4 } from "uuid";
-import { addElement } from "../../../../slice";
+import { addElement, deleteElement } from "../../../../slice";
+import {
+  ActionMenu,
+  ActionsContainer,
+  ActionsMenu,
+  WrapperContainer,
+} from "./common";
 
-export const SectionWrapper: FC = ({ children }) => {
-  const [active, setActive] = useState(false);
+export const SectionWrapper: FC<{ id: string }> = ({ id, children }) => {
   const dispatch = useDispatch();
 
   const handleSectionAdd = () => {
@@ -20,49 +24,29 @@ export const SectionWrapper: FC = ({ children }) => {
     );
   };
 
+  const handleDelete = () => {
+    dispatch(
+      deleteElement({
+        id,
+      })
+    );
+  };
+
   return (
-    <div
-      className={`hl_page-creator--section ${active ? "active" : ""}`}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
-    >
-      <div className="hl_page-creator--actions">
-        <div className="move-actions">
-          <span data-tooltip="tooltip" data-placement="right" title="Up">
-            <i className="fa fa-arrow-up"></i>
-          </span>
-          <span data-tooltip="tooltip" data-placement="right" title="Down">
-            <i className="fa fa-arrow-down"></i>
-          </span>
-        </div>
-        <div className="more-actions">
-          <span data-tooltip="tooltip" data-placement="left" title="Settings">
-            <i className="fa fa-cog"></i>
-          </span>
-          <span data-tooltip="tooltip" data-placement="left" title="Clone">
-            <i className="fa fa-eye"></i>
-          </span>
-          <span data-tooltip="tooltip" data-placement="left" title="Save">
-            <i className="fa fa-copy"></i>
-          </span>
-          <span data-tooltip="tooltip" data-placement="left" title="Delete">
-            <i className="fa fa-trash-alt"></i>
-          </span>
-        </div>
-      </div>
-      <button
-        className="add-new-section"
-        data-tip
-        data-for="addSection"
-        title="Add New Section"
-        onClick={handleSectionAdd}
-      >
-        <i className="fa fa-plus"></i>
-      </button>
-      <ReactTooltip id="addSection">
-        <span>Add new section</span>
-      </ReactTooltip>
+    <WrapperContainer key={id} hoverBorder="#37ca37">
+      <ActionsContainer>
+        <ActionsMenu backgroundColor="#37ca37" key={`actions-for-${id}`}>
+          <div className="more-actions">
+            <ActionMenu key={`edit-${id}`}>
+              <i className="fa fa-cog"></i>
+            </ActionMenu>
+            <ActionMenu onClick={handleDelete} key={`delete-${id}`}>
+              <i className="fa fa-trash-alt"></i>
+            </ActionMenu>
+          </div>
+        </ActionsMenu>
+      </ActionsContainer>
       {children}
-    </div>
+    </WrapperContainer>
   );
 };

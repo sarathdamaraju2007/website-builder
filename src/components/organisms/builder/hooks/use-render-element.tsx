@@ -37,12 +37,11 @@ const renderElement: any = (config: BuilderElement) =>
   );
 
 export const useRenderElement: any = (config: BuilderElement) => {
-  console.log(config);
   if (validElements.includes(config.tag)) {
     switch (config.tag) {
       case "__section__": {
         return (
-          <SectionWrapper>
+          <SectionWrapper key={config.id} id={config.id}>
             {config.children?.length ? (
               renderElement(config)
             ) : (
@@ -54,7 +53,7 @@ export const useRenderElement: any = (config: BuilderElement) => {
 
       case "__column__": {
         return (
-          <ColumnWrapper>
+          <ColumnWrapper key={config.id} id={config.id}>
             {config.children?.length ? (
               renderElement(config)
             ) : (
@@ -66,13 +65,15 @@ export const useRenderElement: any = (config: BuilderElement) => {
 
       case "__root__": {
         return (
-          <div>{config.children?.length ? renderElement(config) : "empty"}</div>
+          <div key={config.id}>
+            {config.children?.length ? renderElement(config) : "empty"}
+          </div>
         );
       }
 
       default: {
         return (
-          <ElementWrapper id={config.id}>
+          <ElementWrapper key={config.id} id={config.id}>
             {config.children?.length ? renderElement(config) : "empty"}
           </ElementWrapper>
         );

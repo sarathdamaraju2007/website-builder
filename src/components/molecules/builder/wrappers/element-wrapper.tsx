@@ -2,39 +2,14 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setActiveElement } from "../../../../slice/active-element";
+import { deleteElement } from "../../../../slice/builder";
 import { ModalType, toggleView } from "../../../../slice/modals";
-
-const ActionsContainer = styled.div`
-  opacity: 0;
-`;
-
-const WrapperContainer = styled.div`
-  border: 2px solid transparent;
-  position: relative;
-  transition: all 0.2s ease-in-out 0s;
-  padding: 4px 0px;
-
-  &:hover {
-    border-color: #ff7402;
-    ${ActionsContainer} {
-      opacity: 1;
-    }
-  }
-`;
-
-const ActionsMenu = styled.div`
-  display: flex;
-  position: absolute;
-  top: -25px;
-  right: -2px;
-  z-index: 2;
-  background-color: #ff7402;
-`;
-
-const ActionMenu = styled.span`
-  margin: 0px 4px;
-  color: #fff;
-`;
+import {
+  ActionMenu,
+  ActionsContainer,
+  ActionsMenu,
+  WrapperContainer,
+} from "./common";
 
 export const ElementWrapper: FC<{ id: string }> = ({ id, children }) => {
   const dispatch = useDispatch();
@@ -53,21 +28,23 @@ export const ElementWrapper: FC<{ id: string }> = ({ id, children }) => {
       })
     );
   };
+
+  const handleDelete = () => {
+    dispatch(
+      deleteElement({
+        id,
+      })
+    );
+  };
   return (
-    <WrapperContainer>
+    <WrapperContainer key={id} hoverBorder="#ff7402">
       <ActionsContainer>
-        <ActionsMenu>
+        <ActionsMenu key={`actions-for-${id}`} backgroundColor="#ff7402">
           <div className="more-actions">
-            <ActionMenu onClick={handleEdit}>
+            <ActionMenu key={`edit-${id}`} onClick={handleEdit}>
               <i className="fa fa-cog"></i>
             </ActionMenu>
-            <ActionMenu>
-              <i className="fa fa-eye"></i>
-            </ActionMenu>
-            <ActionMenu>
-              <i className="fa fa-copy"></i>
-            </ActionMenu>
-            <ActionMenu>
+            <ActionMenu onClick={handleDelete} key={`delete-${id}`}>
               <i className="fa fa-trash-alt"></i>
             </ActionMenu>
           </div>

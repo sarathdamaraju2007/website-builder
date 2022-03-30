@@ -9,16 +9,14 @@ const getTreeFromList = (data: BuilderElementForStore[]) => {
   // this is because root should come at last
   let list = data.slice(1).sort((a, b) => b.createdAt - a.createdAt);
 
-  let map: Record<string, any> = {},
-    node;
+  let map: Record<string, any> = {};
 
   for (let i = 0; i < list.length; i += 1) {
     map[list[i].id] = i;
   }
 
   for (let j = 0; j < list.length; j += 1) {
-    node = list[j];
-    if (list[j].parentId !== "__root__") {
+    if (list[j] && list[j].parentId !== "__root__") {
       const { children, ...rest } = list[map[list[j].parentId]];
       list[map[list[j].parentId]] = {
         ...rest,

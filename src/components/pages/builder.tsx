@@ -82,7 +82,10 @@ export const BuilderPage = () => {
       >
         <Container>
           {columnsConfig.map((column) => (
-            <Panel onClick={() => handleColumnAdd(column.columnCount)}>
+            <Panel
+              key={column.id}
+              onClick={() => handleColumnAdd(column.columnCount)}
+            >
               {column.iconClass && (
                 <span className="icon">
                   <i className={column.iconClass}></i>
@@ -100,7 +103,7 @@ export const BuilderPage = () => {
       >
         <Container>
           {elementsConfig.map((element) => (
-            <Panel onClick={() => handleElementAdd(element)}>
+            <Panel key={element.id} onClick={() => handleElementAdd(element)}>
               <p>{element.tag}</p>
             </Panel>
           ))}

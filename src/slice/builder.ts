@@ -42,9 +42,20 @@ export const builderSlice = createSlice({
         };
       }
     },
+    deleteElement: (state, action: PayloadAction<{ id: string }>) => {
+      const {
+        payload: { id },
+      } = action;
+
+      const updatedState = { ...state };
+
+      delete updatedState[id];
+
+      return updatedState;
+    },
   },
 });
 
-export const { addElement, editElement } = builderSlice.actions;
+export const { addElement, editElement, deleteElement } = builderSlice.actions;
 
 export const builderReducer = builderSlice.reducer;
